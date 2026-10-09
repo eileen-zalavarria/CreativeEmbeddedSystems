@@ -1,2 +1,10 @@
-# CreativeEmbeddedSystems
-For creative embedded systems class projects
+# About
+Repository containing projects for COMS BC3930 Creative Embedded Systems. Each file corresponds to one module project.
+Links to blog posts for each project:
+- Module 1 Generative Art: https://sideways-danthus-922.notion.site/Module-1-Art-Installation-Blog-3f3cf4070bd98008b7c8d9451a395e77?source=copy_link
+
+# Module 1 
+<iframe src="https://giphy.com/embed/2VdQC07VHobI3clRKD" width="480" height="422" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/2VdQC07VHobI3clRKD">via GIPHY</a></p>
+
+
+
