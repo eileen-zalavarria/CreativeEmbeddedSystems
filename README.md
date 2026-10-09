@@ -5,6 +5,7 @@ Links to blog posts for each project:
 
 # Module 1 
 Randomly generated multi-colored emoticons streaming across a black screen.
+
 <img width="480" height="422" alt="gif" src="https://github.com/user-attachments/assets/c31c0a0b-e750-4f93-80c8-e2f1ed5a3b29" />
 
 
