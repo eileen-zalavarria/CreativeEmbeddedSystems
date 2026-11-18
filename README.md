@@ -3,6 +3,7 @@ Repository containing projects for COMS BC3930 Creative Embedded Systems. Each f
 Links to blog posts for each project:
 - Module 1 Generative Art: https://sideways-danthus-922.notion.site/Module-1-Art-Installation-Blog-3f3cf4070bd98008b7c8d9451a395e77?source=copy_link
 - Module 2 Interactive Devices: https://app.notion.com/p/Module-2-Interactive-Devices-Project-408cf4070bd98090b96ddb3b5c5e1255?source=copy_link
+- Module 3 Color Lab: https://app.notion.com/p/Module-3-Distributed-Communication-Partner-Project-41bcf4070bd9804b9d38db6e1c68d957?source=copy_link
 
 # Module 1 
 The project file includes an Arduino sketch of randomly generated multi-colored emoticons streaming across a black screen for an ESP32. The goal with this project was for my art piece to reference older internet chat culture, and evoke nostalgia associated with those times. Simply clone this sketch onto your device and load it in Arduino and connect your ESP32. 
@@ -21,15 +22,74 @@ The finished project is a cute pet simulator game that includes multiple objects
 
 <img width="400" height="429" alt="pawlished_salon" src="https://github.com/user-attachments/assets/4585caa3-e72c-44db-a9f2-b539f99744f0" />
 
+## Module 3: Color Lab
 
+Color Lab is a two-player color matching game made with two ESP32 LILYGO T-Display boards. The boards talk to each other over ESP-NOW, so both players see the same thing on their screens.
 
+![Color Lab gameplay](color_lab_demo.gif)
 
+### Design Goals
 
+We wanted to make a co-op version of those color matching games where you try to get as close as you can to a target color. Here's how our game works:
 
+- Red is locked to the target, so you only have to worry about two colors
+- Player 0 controls green and player 1 controls blue
+- The left bottle shows the target color, and the right bottle shows your team's mix, which updates live when either of you changes your color
+- When you both submit, a bar shows how close you got as a percentage
+- We went for a cozy pixel art look for the screen
 
+### What You Need
 
+- 2 LILYGO T-Display ESP32 boards
+- 2 USB-C cables
+- Arduino IDE
+- ESP32 board package (version 3.x)
+- TFT_eSPI library
 
+Make sure `module3.ino` and `color_lab_background.h` are in the same folder. The `.h` file is the background image saved as pixel data, and the code won't compile without it.
 
+### How to Build It
 
+1. In Arduino IDE, go to Boards Manager, search "esp32", and install the one by Espressif. You need version 3.x or the code will throw an error.
+2. Install TFT_eSPI from Library Manager.
+3. Set up TFT_eSPI for the T-Display. Find `User_Setup_Select.h` in the TFT_eSPI library folder, comment out `#include <User_Setup.h>`, and uncomment this line:
 
+   ```cpp
+   #include <User_Setups/Setup25_TTGO_T_Display.h>
+   ```
 
+   If you skip this, the screen will probably just stay blank.
+
+4. Change `TEAM_ID` to a random number that other people nearby aren't using. It has to be the same on both boards.
+
+   ```cpp
+   #define TEAM_ID 74
+   ```
+
+5. For the first board, set `PLAYER_ID` to 0 and upload (we used **ESP32 Dev Module** as the board). This board is the host and picks the target colors.
+
+   ```cpp
+   #define PLAYER_ID 0
+   ```
+
+6. For the second board, change it to `#define PLAYER_ID 1` and upload again.
+7. Turn both boards on. The blue board will say "Waiting for target..." for a second until it hears from the host.
+
+### How to Play
+
+- Tap the **right button** to add 5 to your color
+- Tap the **left button** to subtract 5
+- **Hold** either button for 2 seconds to submit
+- Once you both submit, your score shows up for about 8 seconds, and then a new round starts on its own
+
+### How It Works (Quick Version)
+
+- The host (player 0) picks a random target color and sends it to the other board
+- Each board sends its color value whenever it changes, plus a backup message every second in case one gets lost
+- The screen gets drawn in memory first and then pushed all at once, which stopped the flickering we had at first
+
+### Stuff That Tripped Us Up
+
+- **Target kept changing and one board got stuck on "Submitted! Waiting..."**: This was other teams' boards using the same `TEAM_ID` as us. Changing it to a different number fixed it right away.
+- **Screen flickering**: The screen was redrawing every time a message came in, even when nothing had changed. Now it only redraws when a value actually changes.
+- **Blue board stuck on "Waiting for target..."**: Double check that the other board is flashed as player 0 and both have the same `TEAM_ID`.
