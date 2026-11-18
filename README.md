@@ -22,7 +22,7 @@ The finished project is a cute pet simulator game that includes multiple objects
 
 <img width="400" height="429" alt="pawlished_salon" src="https://github.com/user-attachments/assets/4585caa3-e72c-44db-a9f2-b539f99744f0" />
 
-## Module 3: Color Lab
+# Module 3: Color Lab
 
 Color Lab is a two-player color matching game made with two ESP32 LILYGO T-Display boards. The boards talk to each other over ESP-NOW, so both players see the same thing on their screens.
 
@@ -82,14 +82,8 @@ Make sure `module3.ino` and `color_lab_background.h` are in the same folder. The
 - **Hold** either button for 2 seconds to submit
 - Once you both submit, your score shows up for about 8 seconds, and then a new round starts on its own
 
-### How It Works (Quick Version)
+### How It Works
 
 - The host (player 0) picks a random target color and sends it to the other board
 - Each board sends its color value whenever it changes, plus a backup message every second in case one gets lost
 - The screen gets drawn in memory first and then pushed all at once, which stopped the flickering we had at first
-
-### Stuff That Tripped Us Up
-
-- **Target kept changing and one board got stuck on "Submitted! Waiting..."**: This was other teams' boards using the same `TEAM_ID` as us. Changing it to a different number fixed it right away.
-- **Screen flickering**: The screen was redrawing every time a message came in, even when nothing had changed. Now it only redraws when a value actually changes.
-- **Blue board stuck on "Waiting for target..."**: Double check that the other board is flashed as player 0 and both have the same `TEAM_ID`.
