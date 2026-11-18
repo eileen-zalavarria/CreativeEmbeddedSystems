@@ -86,5 +86,5 @@ Make sure `module3.ino` and `color_lab_background.h` are in the same folder. The
 ### How It Works
 
 - The host (player 0) picks a random target color and sends it to the other board
-- Each board sends its color value whenever it changes, plus a backup message every second in case one gets lost
-- The screen gets drawn in memory first and then pushed all at once, which stopped the flickering we had at first
+- Each board sends its color value whenever it changes, and a backup message every second in case one gets lost
+- The screen gets drawn in memory first and then pushed all at once, which stopped the flickering issue we encountered
