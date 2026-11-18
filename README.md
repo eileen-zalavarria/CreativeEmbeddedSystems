@@ -26,7 +26,8 @@ The finished project is a cute pet simulator game that includes multiple objects
 
 Color Lab is a two-player color matching game made with two ESP32 LILYGO T-Display boards. The boards talk to each other over ESP-NOW, so both players see the same thing on their screens.
 
-![Color Lab gameplay](color_lab_demo.gif)
+<img width="420" height="399" alt="color_lab_demo" src="https://github.com/user-attachments/assets/7b122a78-4f58-4ad1-bd31-1f396ef0f7ce" />
+
 
 ### Design Goals
 
